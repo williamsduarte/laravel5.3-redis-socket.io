@@ -39,8 +39,8 @@ class SocketController extends Controller
                 'message' => $input['message']
             ]);
 
-            $data = ['message' => $input['message'], 'user' => $user->name];
-            $redis->publish('message', json_encode($data));
+            $data = ['message' => $input['message'], 'user' => $user->name, 'user_id' => $user->id];
+            $redis->publish('globalNotificationChannel', json_encode($data));
         }
     }
 }

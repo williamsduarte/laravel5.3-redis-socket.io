@@ -36,10 +36,10 @@
 
     <script>
         var socket = io.connect('http://localhost:3000');
-        socket.on('message', function (data) {
+        socket.on('globalNotificationChannel:user-3', function (data) {
             console.log(data);
-            data = JSON.parse(data);
-            $( "#messages" ).append( "<p>"+data.user+" : "+data.message+"</p>" );
+            //data = JSON.parse(data);
+            //$( "#messages" ).append( "<p>"+data.user+" : "+data.message+"</p>" );
         });
 
         $('input.send').click(function(e){

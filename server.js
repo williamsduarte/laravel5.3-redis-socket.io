@@ -11,10 +11,11 @@ io.on('connection', function (socket) {
   console.log('Client connected');
   var redisClient = redis.createClient();
 
-  redisClient.subscribe('message');
+  redisClient.subscribe('globalNotificationChannel');
 
   redisClient.on("message", function (channel, message) {
-    socket.emit(channel, message);
+    message = JSON.parse(message);
+    socket.emit(channel + ':user-'+ message.user_id, message);
   });
 
   redisClient.on('disconnect', function () {
