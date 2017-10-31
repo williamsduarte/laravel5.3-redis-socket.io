@@ -15,6 +15,7 @@ class SocketController extends Controller
     //Write Message
     public function writemessage()
     {
+
         $messages = Message::leftJoin('users', function($join) {
             $join->on('messages.user_id', '=', 'users.id');
         })->select(
