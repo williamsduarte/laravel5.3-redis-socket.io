@@ -34,12 +34,19 @@ class SocketController extends Controller
 
         if(!isset($input['message']) || trim($input['message']) === ''){
         }else{
+
             Message::create([
                 'user_id' => $user->id,
                 'message' => $input['message']
             ]);
 
-            $data = ['message' => $input['message'], 'user' => $user->name, 'user_id' => $user->id];
+            $data = [
+                'message' => $input['message'], 
+                'user' => $user->name, 
+                'user_id' => $user->id,
+                'user_token' => $input['user_token']
+            ];
+
             $redis->publish('globalNotificationChannel', json_encode($data));
         }
     }

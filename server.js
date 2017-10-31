@@ -14,8 +14,8 @@ io.on('connection', function (socket) {
   redisClient.subscribe('globalNotificationChannel');
 
   redisClient.on("message", function (channel, message) {
-    message = JSON.parse(message);
-    socket.emit(channel + ':user-'+ message.user_id, message);
+    data = JSON.parse(message);
+    socket.emit(channel +':'+ data.user_token, message);
   });
 
   redisClient.on('disconnect', function () {

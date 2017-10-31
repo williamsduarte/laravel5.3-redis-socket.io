@@ -35,11 +35,14 @@
     </div>
 
     <script>
+
+        var user_token = '{{ md5( Auth::user()->id ) }}';
+
         var socket = io.connect('http://localhost:3000');
-        socket.on('globalNotificationChannel:user-3', function (data) {
+        socket.on('globalNotificationChannel:'+ user_token, function (data) {
             console.log(data);
-            //data = JSON.parse(data);
-            //$( "#messages" ).append( "<p>"+data.user+" : "+data.message+"</p>" );
+            data = JSON.parse(data);
+            $( "#messages" ).append( "<p>"+data.user+" : "+data.message+"</p>" );
         });
 
         $('input.send').click(function(e){
@@ -52,7 +55,7 @@
             $.ajax({
                 type: "POST",
                 url: "sendmessage",
-                data: { "_token": $('meta[name="csrf-token"]').attr('content'), "message": message},
+                data: { "_token": $('meta[name="csrf-token"]').attr('content'), "message": message, "user_token":  user_token},
                 cache: false,
                 success: function(results){
                 }
